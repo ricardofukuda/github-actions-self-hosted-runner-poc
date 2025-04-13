@@ -1,0 +1,68 @@
+# Based on: https://github.com/moby/buildkit/tree/master/examples/kubernetes
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: buildkitd
+  name: buildkitd
+  namespace: buildkitd
+spec:
+  serviceName: buildkitd
+  podManagementPolicy: Parallel
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buildkitd
+  template:
+    metadata:
+      labels:
+        app: buildkitd
+    spec:
+      containers:
+        - name: buildkitd
+          image: moby/buildkit:master
+          args:
+            - --addr
+            - unix:///run/buildkit/buildkitd.sock
+            - --addr
+            - tcp://0.0.0.0:1234
+          readinessProbe:
+            exec:
+              command:
+                - buildctl
+                - debug
+                - workers
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          livenessProbe:
+            exec:
+              command:
+                - buildctl
+                - debug
+                - workers
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 1234
+          volumeMounts:
+            - mountPath: /home/user/.local/share/buildkit
+              name: buildkitd
+      volumes:
+        - name: buildkitd
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: buildkitd
+  name: buildkitd
+  namespace: buildkitd
+spec:
+  ports:
+    - port: 1234
+      protocol: TCP
+  selector:
+    app: buildkitd
