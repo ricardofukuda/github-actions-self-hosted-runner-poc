@@ -1,12 +1,12 @@
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.31"
+  version = "~> 20.37"
 
   create = true
 
   cluster_name = var.cluster_name
-  cluster_version = "1.31"
+  cluster_version = "1.33"
 
   cluster_endpoint_public_access  = true # TEST ONLY
   cluster_endpoint_private_access = true
@@ -34,7 +34,7 @@ module "eks" {
   }
 
   eks_managed_node_group_defaults = {
-    ami_type       = "AL2_x86_64"
+    ami_type       = "AL2023_x86_64_STANDARD"
 
     #subnet_ids = module.vpc.private_subnets # by default, we use private subnets
     subnet_ids = [data.aws_subnet.us-east-1d.id]

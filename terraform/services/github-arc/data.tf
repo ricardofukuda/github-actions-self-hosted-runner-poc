@@ -13,3 +13,7 @@ data "template_file" "values-arc" {
 data "template_file" "values-runner-set" {
   template = file("config/values-runner-set.yml")
 }
+
+data "template_file" "iam" {
+  template = file("${path.module}/polices/iam.json")
+}

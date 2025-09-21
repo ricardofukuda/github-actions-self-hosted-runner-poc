@@ -8,6 +8,6 @@ resource "kubernetes_storage_class" "ebs_csi_gp3" {
   parameters = {
     type = "gp3"
   }
-
+  volume_binding_mode = "WaitForFirstConsumer"
   depends_on = [ module.eks, module.ebs_csi_role ]
 }

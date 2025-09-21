@@ -1,1 +1,1 @@
-domain = "ricardoxyz.xyz"
+domain = "ricardoxyz.click"
