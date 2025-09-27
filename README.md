@@ -8,7 +8,10 @@ This POC must belong to a GitHub Organization in order to use GitHub Application
 ## Contains
 - EKS Cluster
 - Istio for service mesh
-- GitHub Actions Self Managed Runners on Kubernetes (EKS)
+- GitHub Actions Self Hosted Runners on Kubernetes (EKS)
 
 ## Authentication
 aws eks update-kubeconfig --region us-east-1 --name eks-infra
+
+## Workflow for test
+https://github.com/ricardofukuda-org/github-actions-self-hosted-runner-workflow-test

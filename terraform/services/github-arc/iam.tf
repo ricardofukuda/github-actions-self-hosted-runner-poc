@@ -30,7 +30,7 @@ module "role" {
 
   role_name                     = lower("github-actions-runner-role")
   provider_url                  = aws_iam_openid_connect_provider.this.url
-  oidc_subjects_with_wildcards = [lower("repo:ricardofukuda-org/*")]
+  oidc_subjects_with_wildcards = [lower("repo:ricardofukuda-org/github-actions-self-hosted-runner-workflow-test")]
   role_policy_arns              = [module.policy.arn]
 
   tags = var.tags
