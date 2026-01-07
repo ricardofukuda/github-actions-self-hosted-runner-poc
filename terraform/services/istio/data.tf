@@ -16,7 +16,7 @@ data "template_file" "values_ingressgateway" {
   template = file("config/values_ingressgateway.yml")
   vars = {
     certificate_arn = data.aws_acm_certificate.certificate.arn
-    cidr_range = "${chomp(data.http.icanhazip.body)}/32" # TEST ONLY
+    cidr_range = "${chomp(data.http.icanhazip.response_body)}/32" # TEST ONLY
   }
 }
 

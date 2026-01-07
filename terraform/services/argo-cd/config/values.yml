@@ -1,0 +1,17 @@
+global:
+  # -- Default domain used by all components
+  ## Used for ingresses, certificates, SSO, notifications, etc.
+  domain: argo.ricardoxyz.website
+
+configs:
+  params:
+    server.insecure: true
+  tls:
+    create: true
+
+certificate:
+  enabled: true
+
+server:
+  ingress:
+    tls: true

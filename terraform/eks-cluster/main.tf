@@ -6,11 +6,11 @@ module "eks" {
   create = true
 
   cluster_name = var.cluster_name
-  cluster_version = "1.33"
+  cluster_version = "1.34"
 
   cluster_endpoint_public_access  = true # TEST ONLY
   cluster_endpoint_private_access = true
-  cluster_endpoint_public_access_cidrs = ["${chomp(data.http.icanhazip.body)}/32"] # restrict to my current public ip #TEST #TODO
+  cluster_endpoint_public_access_cidrs = ["${chomp(data.http.icanhazip.response_body)}/32"] # restrict to my current public ip #TEST #TODO
 
   control_plane_subnet_ids = module.vpc.private_subnets
 
@@ -47,7 +47,7 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    app = {
+    infra = {
       min_size     = 1
       max_size     = 2
       desired_size = 2
@@ -55,7 +55,7 @@ module "eks" {
       disk_size = 20
 
       instance_types = ["t3.medium"]
-      capacity_type  = "SPOT"
+      capacity_type  = "ON_DEMAND"
     }
   }
 

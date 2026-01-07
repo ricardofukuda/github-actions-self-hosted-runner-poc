@@ -1,11 +1,5 @@
-resource "kubernetes_namespace" "namespace" {
-  metadata {
-    name = "istio-ingressgateway"
-
-    labels = {
-      "istio-injection" = "enabled"
-    }
-  }
+locals {
+  istio_version = "1.21.0"
 }
 
 # https://artifacthub.io/packages/helm/istio-official/base/1.21.0
@@ -16,7 +10,7 @@ resource "helm_release" "istio_base" {
   repository = "https://istio-release.storage.googleapis.com/charts"
   chart      = "base"
   namespace  = "istio-system"
-  version    = "1.21.0"
+  version    = local.istio_version
 
   values = [data.template_file.values_base.rendered]
 
@@ -31,7 +25,7 @@ resource "helm_release" "istiod" {
   repository = "https://istio-release.storage.googleapis.com/charts"
   chart      = "istiod"
   namespace  = "istio-system"
-  version    = "1.21.0"
+  version    = local.istio_version
 
   values = [data.template_file.values.rendered]
 
@@ -46,9 +40,9 @@ resource "helm_release" "istio-ingressgateway" {
   repository = "https://istio-release.storage.googleapis.com/charts"
   chart      = "gateway"
   namespace  = "istio-system"
-  version    = "1.21.0"
+  version    = local.istio_version
 
   values = [data.template_file.values_ingressgateway.rendered]
 
-  depends_on = [ kubernetes_namespace.namespace, helm_release.istiod ]
+  depends_on = [ helm_release.istiod ]
 }

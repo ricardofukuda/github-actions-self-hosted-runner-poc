@@ -1,4 +1,3 @@
-secrets/*
 !.keep
 !secrets-base.json
 !github-app-pk-base.pem
