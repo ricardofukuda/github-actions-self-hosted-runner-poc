@@ -12,8 +12,8 @@ resource "kubernetes_secret" "github-app-credential" {
   data = {
     url                     = "https://github.com/ricardofukuda-org"
     type                    = "helm"
-    githubAppID             = 2600587
-    githubAppInstallationID = 102786917
+    githubAppID             = local.secrets.githubAppID
+    githubAppInstallationID = local.secrets.githubAppInstallationID
   }
 
   binary_data = {
