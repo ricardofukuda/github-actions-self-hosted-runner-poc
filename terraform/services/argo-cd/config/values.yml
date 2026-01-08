@@ -1,13 +1,16 @@
 global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
-  domain: argo.ricardoxyz.website
+  domain: "argo.${domain}"
 
 configs:
   params:
     server.insecure: true
   tls:
     create: true
+  secret:
+    # -- Shared secret for authenticating GitHub webhook events
+    githubSecret: "${githubWebhookSecret}" # important: you must enable webhook permissions inside the github app config
 
 certificate:
   enabled: true

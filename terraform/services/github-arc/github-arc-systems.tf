@@ -11,11 +11,11 @@ resource "helm_release" "github-arc" {
 
   repository = "oci://ghcr.io/actions/actions-runner-controller-charts"
   chart      = "gha-runner-scale-set-controller"
-  version    = "0.12.1"
+  version    = var.github_runner_version
 
   namespace  = kubernetes_namespace.namespace.id
 
   values = [ data.template_file.values-arc.rendered ]
 
-  depends_on = [  kubernetes_namespace.namespace ]
+  depends_on = [  kubernetes_namespace.namespace, kubernetes_namespace.namespace-arc-runner-set, kubernetes_secret.github-app-secret ]
 }

@@ -1,3 +1,10 @@
+locals {
+  allow_ips = [
+    "${chomp(data.http.icanhazip.response_body)}/32" # my public IP
+  ]
+  github_webhook_ips = jsondecode(data.http.github-metadata.response_body).hooks # pull github webhook public ips
+}
+
 data "aws_eks_cluster" "eks" {
   name = "eks-${var.env}"
 }
@@ -16,7 +23,7 @@ data "template_file" "values_ingressgateway" {
   template = file("config/values_ingressgateway.yml")
   vars = {
     certificate_arn = data.aws_acm_certificate.certificate.arn
-    cidr_range = "${chomp(data.http.icanhazip.response_body)}/32" # TEST ONLY
+    cidr_range = join(",", local.allow_ips, local.github_webhook_ips) # FOR LOCAL DEVELOPMENT ONLY
   }
 }
 
@@ -34,4 +41,13 @@ data "aws_acm_certificate" "certificate" {
 
 data "http" "icanhazip" { # get my current public ip
    url = "http://icanhazip.com"
+}
+
+data "http" "github-metadata" { # get github metadatas
+  url = "https://api.github.com/meta"
+
+  request_headers = {
+    Accept = "application/vnd.github+json"
+    "X-GitHub-Api-Version" = "2022-11-28"
+  }
 }

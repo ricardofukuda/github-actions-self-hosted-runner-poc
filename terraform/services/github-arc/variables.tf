@@ -13,3 +13,6 @@ variable "tags" {
   }
 }
 
+variable "github_runner_version" {
+  type = string
+}

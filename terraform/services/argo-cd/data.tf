@@ -10,6 +10,7 @@ data "template_file" "values" {
   template = file("config/values.yml")
   vars = {
     domain = var.domain
+    githubWebhookSecret = local.secrets.githubWebhookSecret
   }
 }
 

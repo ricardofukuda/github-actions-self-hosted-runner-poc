@@ -14,6 +14,8 @@ resource "helm_release" "github-arc-runner-set" {
   namespace  = kubernetes_namespace.namespace-arc-runner-set.id
 
   values = [data.template_file.values-runner-set.rendered]
+
+  version = var.github_runner_version
   
   set = [
     {
@@ -26,5 +28,5 @@ resource "helm_release" "github-arc-runner-set" {
     }
   ]
 
-  depends_on = [ helm_release.github-arc, kubernetes_namespace.namespace-arc-runner-set ]
+  depends_on = [ helm_release.github-arc, kubernetes_namespace.namespace, kubernetes_namespace.namespace-arc-runner-set ]
 }

@@ -1,7 +1,7 @@
 resource "kubernetes_secret" "github-app-secret" {
   metadata {
     name = "pre-defined-secret" # Somehow, this name is hardcoded inside the helm chart therefore it is not possible to change it
-    namespace = "github-arc-runners"
+    namespace = kubernetes_namespace.namespace-arc-runner-set.id
   }
 
   data = {
@@ -14,6 +14,4 @@ resource "kubernetes_secret" "github-app-secret" {
   }
 
   type = "Opaque"
-
-  depends_on = [ kubernetes_namespace.namespace-arc-runner-set ]
 }

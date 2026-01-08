@@ -50,7 +50,7 @@ module "eks" {
     infra = {
       min_size     = 1
       max_size     = 2
-      desired_size = 2
+      desired_size = 1
 
       disk_size = 20
 
