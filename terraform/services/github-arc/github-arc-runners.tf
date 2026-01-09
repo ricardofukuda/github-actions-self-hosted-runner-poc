@@ -1,6 +1,9 @@
 resource "kubernetes_namespace" "namespace-arc-runner-set" {
   metadata {
     name = "github-arc-runners"
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }
 

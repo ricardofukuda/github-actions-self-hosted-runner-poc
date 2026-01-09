@@ -1,7 +1,7 @@
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.37"
+  version = "~> 20.37.2"
 
   create = true
 
@@ -50,7 +50,7 @@ module "eks" {
     infra = {
       min_size     = 1
       max_size     = 2
-      desired_size = 1
+      desired_size = 2
 
       disk_size = 20
 

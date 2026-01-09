@@ -10,4 +10,6 @@ data "aws_subnet" "us-east-1d" {
     name   = "tag:Tier"
     values = ["private"]
   }
+
+  depends_on = [ module.vpc ]
 }

@@ -5,3 +5,9 @@ containerMode:
 #  noPermissionServiceAccount:
 #    annotations:
 #      eks.amazonaws.com/role-arn: arn:aws:iam::127923327338:role/github-actions-runner-role
+podAnnotations:
+  proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+template:
+  metadata:
+    annotations:
+      proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'

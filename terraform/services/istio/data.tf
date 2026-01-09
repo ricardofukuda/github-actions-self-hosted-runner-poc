@@ -2,7 +2,7 @@ locals {
   allow_ips = [
     "${chomp(data.http.icanhazip.response_body)}/32" # my public IP
   ]
-  github_webhook_ips = jsondecode(data.http.github-metadata.response_body).hooks # pull github webhook public ips
+  github_webhook_ips = [for s in jsondecode(data.http.github-metadata.response_body).hooks : s if strcontains(s, "::") ==  false] # pull github webhook public ips
 }
 
 data "aws_eks_cluster" "eks" {

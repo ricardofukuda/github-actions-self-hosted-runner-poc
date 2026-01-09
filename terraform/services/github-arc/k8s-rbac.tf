@@ -1,6 +1,9 @@
 resource "kubernetes_namespace" "production" {
   metadata {
     name = "production"
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }
 

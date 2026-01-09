@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: guestbook
+  name: applications
   # You'll usually want to add your resources to the argocd namespace.
   namespace: argocd
   # Add this finalizer ONLY if you want these to cascade delete.
@@ -13,21 +13,21 @@ metadata:
     # - resources-finalizer.argocd.argoproj.io/background
   # Add labels to your application object.
   labels:
-    name: guestbook
+    name: applications
 spec:
   # The project the application belongs to.
   project: default
 
   # Source of the application manifests
   source:
-    repoURL: https://github.com/argoproj/argocd-example-apps.git  # Can point to either a Helm chart repo or a git repo.
+    repoURL: https://github.com/ricardofukuda-org/argocd-application-test.git  # Can point to either a Helm chart repo or a git repo.
     targetRevision: HEAD  # For Helm, this refers to the chart version.
-    path: guestbook  # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
-
+    path: applications/overlays/qa/ # This has no meaning for Helm charts pulled directly from a Helm repo instead of git.
+    kustomize:
     # directory
-    directory:
-      recurse: false
-      include: '*.yaml'
+#    directory:
+#      recurse: false
+#      include: '*.yaml'
   # Destination cluster and namespace to deploy the application
   destination:
     # cluster API URL
@@ -35,7 +35,7 @@ spec:
     # or cluster name
     # name: in-cluster
     # The namespace will only be set for namespace-scoped resources that have not set a value for .metadata.namespace
-    namespace: guestbook
+    namespace: argocd
   # Sync policy
   syncPolicy:
     automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.

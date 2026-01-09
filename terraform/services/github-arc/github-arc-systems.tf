@@ -1,6 +1,9 @@
 resource "kubernetes_namespace" "namespace" {
   metadata {
     name = "github-arc-systems"
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }
 
