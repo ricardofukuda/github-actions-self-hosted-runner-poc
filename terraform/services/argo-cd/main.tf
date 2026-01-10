@@ -1,6 +1,9 @@
 resource "kubernetes_namespace" "namespace" {
   metadata {
     name = "argocd"
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }
 

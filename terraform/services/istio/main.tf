@@ -33,8 +33,8 @@ resource "helm_release" "istiod" {
 }
 
 # https://artifacthub.io/packages/helm/istio-official/gateway/1.21.1
-resource "helm_release" "istio-ingressgateway" {
-  name       = "istio-ingressgateway"
+resource "helm_release" "istio-ingressgateway-public" {
+  name       = "istio-ingressgateway-public"
   create_namespace = false
 
   repository = "https://istio-release.storage.googleapis.com/charts"
@@ -42,7 +42,7 @@ resource "helm_release" "istio-ingressgateway" {
   namespace  = "istio-system"
   version    = local.istio_version
 
-  values = [data.template_file.values_ingressgateway.rendered]
+  values = [data.template_file.values_ingressgateway_public.rendered]
 
   depends_on = [ helm_release.istiod ]
 }

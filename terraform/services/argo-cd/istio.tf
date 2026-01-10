@@ -1,4 +1,4 @@
-resource "kubernetes_manifest" "istio_gateway" {
+resource "kubernetes_manifest" "istio_gateway_public" {
   manifest = {
     "apiVersion" = "networking.istio.io/v1alpha3"
     "kind"       = "Gateway"
@@ -8,7 +8,7 @@ resource "kubernetes_manifest" "istio_gateway" {
     }
     "spec" = {
       "selector" = {
-        "istio" = "ingressgateway"
+        "istio" = "ingressgateway-public"
       }
       "servers" = [
         {
@@ -37,9 +37,11 @@ resource "kubernetes_manifest" "istio_gateway" {
       ]
     }
   }
+
+  depends_on = [kubernetes_namespace.namespace]
 }
 
-resource "kubernetes_manifest" "istio_virtual_service" {
+resource "kubernetes_manifest" "istio_virtual_service_public" {
   manifest = {
     "apiVersion" = "networking.istio.io/v1alpha3"
     "kind"       = "VirtualService"
@@ -77,4 +79,6 @@ resource "kubernetes_manifest" "istio_virtual_service" {
       ]
     }
   }
+
+  depends_on = [ kubernetes_manifest.istio_gateway_public, kubernetes_namespace.namespace]
 }

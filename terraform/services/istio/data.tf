@@ -19,8 +19,8 @@ data "template_file" "values" {
   }
 }
 
-data "template_file" "values_ingressgateway" {
-  template = file("config/values_ingressgateway.yml")
+data "template_file" "values_ingressgateway_public" {
+  template = file("config/values_ingressgateway_public.yml")
   vars = {
     certificate_arn = data.aws_acm_certificate.certificate.arn
     cidr_range = join(",", local.allow_ips, local.github_webhook_ips) # FOR LOCAL DEVELOPMENT ONLY

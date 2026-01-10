@@ -14,9 +14,9 @@ data "template_file" "values" {
   }
 }
 
-data "kubernetes_service" "istio_service" {
+data "kubernetes_service" "istio_service_public" {
   metadata {
-    name      = "istio-ingressgateway"
+    name      = "istio-ingressgateway-public"
     namespace = "istio-system"
   }
 }

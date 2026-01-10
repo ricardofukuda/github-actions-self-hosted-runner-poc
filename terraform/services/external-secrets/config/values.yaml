@@ -1,0 +1,6 @@
+global:
+  nodeSelector:
+    role: infra
+serviceAccount:
+  annotations:
+    "eks.amazonaws.com/role-arn": "${iam_role}"

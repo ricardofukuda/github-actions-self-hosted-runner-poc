@@ -2,6 +2,12 @@ global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
   domain: "argo.${domain}"
+  podAnnotations:
+    proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+
+redisSecretInit:
+  podLabels:
+    sidecar.istio.io/inject: "false"
 
 configs:
   params:
