@@ -17,9 +17,3 @@ resource "helm_release" "external-secrets" {
 
   depends_on = [kubernetes_namespace.namespace]
 }
-
-resource "kubernetes_manifest" "cluster-secret-stores" {
-  manifest = yamldecode(data.template_file.cluster-secret-stores.rendered)
-
-  depends_on = [helm_release.external-secrets]
-}

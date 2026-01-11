@@ -5,7 +5,7 @@ locals {
 module "policy" {
   source = "github.com/terraform-aws-modules/terraform-aws-iam//modules/iam-policy?ref=v5.18.0"
 
-  name   = lower("external-secrets-${data.aws_eks_cluster.eks.name}")
+  name   = lower("${var.tags.App}-${var.env}")
   path   = "/"
   policy = data.template_file.iam.rendered
 }
@@ -15,9 +15,9 @@ module "role" {
 
   create_role = true
 
-  role_name                     = lower("external-secrets-${data.aws_eks_cluster.eks.name}")
+  role_name                     = lower("${var.tags.App}-${var.env}")
   provider_url                  = local.oidc_provider_url
-  oidc_fully_qualified_subjects = [lower("system:serviceaccount:${kubernetes_namespace.namespace.id}:external-secrets")]
+  oidc_fully_qualified_subjects = [lower("system:serviceaccount:${var.env}:${var.tags.App}")]
   role_policy_arns              = [module.policy.arn]
 
   tags = var.tags

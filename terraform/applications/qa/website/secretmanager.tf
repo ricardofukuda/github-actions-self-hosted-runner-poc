@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "website" {
-  name                    = "eks-infra/website"
+  name                    = "eks-infra/qa/website"
   recovery_window_in_days = 7 # Time window before final deletion
 }
 
