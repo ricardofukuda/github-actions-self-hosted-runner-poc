@@ -2,21 +2,32 @@
   "Version": "2012-10-17",
   "Statement": [
       {
-          "Sid": "Allow",
-          "Effect": "Allow",
-          "Action": [
-              "ecr:GetAuthorizationToken",
-              "ecr:Describe*",
-              "ecr:List*",
-              "ecr:PutImage",
-              "ecr:BatchCheckLayerAvailability",
-              "ecr:InitiateLayerUpload",
-              "ecr:UploadLayerPart",
-              "ecr:CompleteLayerUpload",
-              "ecr:BatchGetImage",
-              "eks:DescribeCluster"
-          ],
-          "Resource": "*"
-      }
+        "Sid": "ecr",
+        "Effect": "Allow",
+        "Action": [
+            "ecr:GetAuthorizationToken",
+            "ecr:Describe*",
+            "ecr:List*",
+            "ecr:PutImage",
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:InitiateLayerUpload",
+            "ecr:UploadLayerPart",
+            "ecr:CompleteLayerUpload",
+            "ecr:BatchGetImage",
+            "eks:DescribeCluster"
+        ],
+        "Resource": "*"
+    },
+    {
+        "Sid": "secretmanager",
+        "Effect": "Allow",
+        "Action": [
+            "secretsmanager:DescribeSecret",
+            "secretsmanager:ListSecretVersionIds",
+            "secretsmanager:GetSecretValue",
+            "secretsmanager:UpdateSecretVersionStage"
+        ],
+        "Resource": "arn:aws:secretsmanager:us-east-1:127923327338:secret:eks-infra/*"
+    }
   ]
 }
