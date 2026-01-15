@@ -1,0 +1,42 @@
+provider:
+  name: aws
+env:
+  - name: AWS_DEFAULT_REGION
+    value: ${region}
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: ${iam_role_arn}
+
+extraArgs:
+  aws-zone-type: public # only look at public hosted zones (valid values are public, private or no value for both)
+
+namespaced: false
+
+nodeSelector:
+  role: infra
+
+txtOwnerId: ${cluster_name}-external-dns
+txtPrefix: ${cluster_name}-
+registry: txt
+policy: upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
+domainFilters:
+  - "${domain}"
+sources:
+  - "istio-gateway"
+
+tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "infra"
+    effect: "NoSchedule"
+
+interval: 5m
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 100Mi
+  limits:
+    cpu: 50m
+    memory: 150Mi

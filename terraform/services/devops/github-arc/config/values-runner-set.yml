@@ -1,0 +1,13 @@
+# https://github.com/actions/actions-runner-controller/blob/master/charts/gha-runner-scale-set/values.yaml
+containerMode:
+  type: "dind"  ## type can be set to dind or kubernetes
+#resourceMeta:
+#  noPermissionServiceAccount:
+#    annotations:
+#      eks.amazonaws.com/role-arn: arn:aws:iam::127923327338:role/github-actions-runner-role
+podAnnotations:
+  proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+template:
+  metadata:
+    annotations:
+      proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'

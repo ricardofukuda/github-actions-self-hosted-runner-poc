@@ -12,10 +12,13 @@ module "vpc" {
 
   private_subnet_tags = {
     Tier = "private"
+    "karpenter.sh/discovery" = var.cluster_name
+    eks-cluster = var.cluster_name
   }
 
   public_subnet_tags = {
     Tier = "public"
+    eks-cluster = var.cluster_name
   }
 
   enable_nat_gateway = true

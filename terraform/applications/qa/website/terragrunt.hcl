@@ -3,5 +3,5 @@ include "root" {
 }
 
 dependencies {
-  paths = ["../../../services/istio", "../../../services/external-secrets"]
+  paths = ["../../../services/infra/istio", "../../../services/infra/external-secrets"]
 }

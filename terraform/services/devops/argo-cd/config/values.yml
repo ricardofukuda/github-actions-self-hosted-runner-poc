@@ -1,0 +1,91 @@
+global:
+  # -- Default domain used by all components
+  ## Used for ingresses, certificates, SSO, notifications, etc.
+  domain: "argo.${domain}"
+  podAnnotations:
+    proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+
+redisSecretInit:
+  podLabels:
+    sidecar.istio.io/inject: "false"
+
+configs:
+  params:
+    server.insecure: true
+  tls:
+    create: true
+  secret:
+    # -- Shared secret for authenticating GitHub webhook events
+    githubSecret: "${githubWebhookSecret}" # important: you must enable webhook permissions inside the github app config
+
+certificate:
+  enabled: true
+
+server:
+  ingress:
+    tls: true
+
+controller:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+applicationSet:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+commitServer:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+notifications:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+repoServer:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+server:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+dex:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi
+redis:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 250m
+      memory: 1Gi

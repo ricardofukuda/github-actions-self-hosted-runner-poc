@@ -1,0 +1,16 @@
+global:
+  nodeSelector:
+    role: infra
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "infra"
+      effect: "NoSchedule"
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 100Mi
+  limits:
+    cpu: 50m
+    memory: 150Mi

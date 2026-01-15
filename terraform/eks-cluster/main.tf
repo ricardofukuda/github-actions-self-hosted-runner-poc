@@ -17,6 +17,19 @@ module "eks" {
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = [] # empty to force each nodegroup to configure it
 
+  iam_role_use_name_prefix = true
+  iam_role_name = var.cluster_name
+
+  bootstrap_self_managed_addons= true
+
+  node_security_group_tags = {
+    "karpenter.sh/discovery" = var.cluster_name
+  }
+
+  iam_role_additional_policies = {
+    "session_manager" = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  }
+  
   cluster_addons = {
     coredns = {
       most_recent = true
@@ -25,6 +38,14 @@ module "eks" {
       most_recent = true
     }
     vpc-cni = {
+      most_recent = true # ENABLE_PREFIX_DELEGATION: increase the max amount of Pods per node by increasing the max amount of IPs for each ENI attached to the node. Risk: you should recreate all nodegroups to avoid conflicts with prefix and non-prefix ips.
+      configuration_values = jsonencode({
+        env = {
+          ENABLE_PREFIX_DELEGATION = "true"
+        }
+      })
+    }
+    eks-pod-identity-agent = {
       most_recent = true
     }
     aws-ebs-csi-driver = {
@@ -49,17 +70,24 @@ module "eks" {
   eks_managed_node_groups = {
     infra = {
       min_size     = 1
-      max_size     = 2
-      desired_size = 2
+      max_size     = 1
+      desired_size = 1
 
       disk_size = 20
 
-      instance_types = ["t3.medium"]
+      instance_types = ["t3a.medium"]
       capacity_type  = "ON_DEMAND"
 
       labels = {
         role = "infra"
       }
+
+      taints = [{
+        "key" = "role"
+        "value" = "infra"
+        "operator": "Equal"
+        "effect" = "NO_SCHEDULE"
+      }]
     }
   }
 

@@ -1,3 +1,0 @@
-global:
-  nodeSelector:
-    role: infra
