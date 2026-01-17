@@ -82,12 +82,12 @@ module "eks" {
         role = "infra"
       }
 
-      taints = [{
-        "key" = "role"
-        "value" = "infra"
-        "operator": "Equal"
-        "effect" = "NO_SCHEDULE"
-      }]
+#      taints = [{
+#        "key" = "role"
+#        "value" = "infra"
+#        "operator": "Equal"
+#        "effect" = "NO_SCHEDULE"
+#      }]
     }
   }
 

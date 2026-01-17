@@ -6,3 +6,4 @@ tags = {
   Terraform = true
   Environment = "infra"
 }
+domain="ricardoxyz.website"

@@ -13,10 +13,3 @@ data "template_file" "values" {
     githubWebhookSecret = local.secrets.githubWebhookSecret
   }
 }
-
-data "kubernetes_service" "istio_service_public" {
-  metadata {
-    name      = "istio-ingressgateway-public"
-    namespace = "istio-system"
-  }
-}

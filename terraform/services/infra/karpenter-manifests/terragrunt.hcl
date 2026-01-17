@@ -3,7 +3,7 @@ include "root" {
 }
 
 dependencies {
-  paths = ["../istio", "../external-secrets"]
+  paths = ["../istio"]
 }
 
 dependency "karpenter"{

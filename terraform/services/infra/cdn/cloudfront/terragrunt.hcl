@@ -3,5 +3,5 @@ include "root" {
 }
 
 dependencies {
-  paths = ["../../infra/istio", "../../infra/karpenter-manifests"]
+  paths = ["../../istio"]
 }

@@ -9,7 +9,7 @@ serviceAccount:
     eks.amazonaws.com/role-arn: ${iam_role_arn}
 
 extraArgs:
-  aws-zone-type: public # only look at public hosted zones (valid values are public, private or no value for both)
+  aws-zone-type: private # only look at public hosted zones (valid values are public, private or no value for both)
 
 namespaced: false
 

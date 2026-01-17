@@ -3,5 +3,13 @@ include "root" {
 }
 
 dependencies {
-  paths = ["../../infra/istio", "../../infra/karpenter"]
+  paths = ["../../infra/istio", "../../infra/karpenter-manifests"]
+}
+
+dependency "cloudfront"{
+  config_path = "../../infra/cdn/cloudfront"
+}
+
+inputs = {
+  cloudfront_distribution_domain       = dependency.cloudfront.outputs.cloudfront_distribution_domain
 }
