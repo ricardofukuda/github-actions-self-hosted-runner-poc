@@ -13,3 +13,5 @@ pilot:
       operator: "Equal"
       value: "infra"
       effect: "NoSchedule"
+
+priorityClassName: "system-cluster-critical"

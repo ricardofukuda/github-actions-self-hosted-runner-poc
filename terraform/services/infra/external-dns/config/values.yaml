@@ -13,8 +13,8 @@ extraArgs:
 
 namespaced: false
 
-nodeSelector:
-  role: infra
+#nodeSelector:
+#  role: infra
 
 txtOwnerId: ${cluster_name}-external-dns
 txtPrefix: ${cluster_name}-

@@ -1,6 +1,6 @@
 global:
-  nodeSelector:
-    role: infra
+#  nodeSelector:
+#    role: infra
   tolerations:
     - key: "role"
       operator: "Equal"
