@@ -30,6 +30,7 @@ resource "helm_release" "github-arc-runner-set" {
       value =  local.secrets.github_org_url
     }
   ]
+  
 
   depends_on = [ helm_release.github-arc, kubernetes_namespace.namespace, kubernetes_namespace.namespace-arc-runner-set ]
 }
