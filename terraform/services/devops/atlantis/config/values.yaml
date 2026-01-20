@@ -1,0 +1,99 @@
+orgAllowlist: "${github_org}"
+
+podTemplate:
+  annotations:
+    proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+
+defaultTFVersion: v1.14.3
+environment:
+  ATLANTIS_GH_APP_KEY_FILE: "/terragrunt/atlantis-github-app-pk.pem"
+  ATLANTIS_ATLANTIS_URL: "https://atlantis.${domain}"
+  ATLANTIS_WRITE_GIT_CREDS: "true"
+  TERRAGRUNT_TFPATH: "terraform"
+  TF_IN_AUTOMATION: "true"
+  #ATLANTIS_LOG_LEVEL: "debug"
+
+service:
+  type: ClusterIP
+
+environmentSecrets:
+  - name: ATLANTIS_GH_APP_ID
+    secretKeyRef:
+      name: atlantis-secrets
+      key: github_app_id
+  - name: ATLANTIS_GH_INSTALLATION_ID
+    secretKeyRef:
+      name: atlantis-secrets
+      key: github_app_installation_id
+  - name: ATLANTIS_GH_WEBHOOK_SECRET
+    secretKeyRef:
+      name: atlantis-secrets
+      key: webhook_secret
+
+extraVolumes:
+  - name: secret-volume
+    secret:
+      secretName: atlantis-secrets
+      items:
+      - key: "github_app_private_key"            # Specifies which key to project
+        path: "atlantis-github-app-pk.pem"  
+extraVolumeMounts:
+  - name: secret-volume
+    mountPath: /terragrunt/atlantis-github-app-pk.pem
+    subPath: atlantis-github-app-pk.pem
+    readOnly: true
+
+volumeClaim:
+  enabled: true
+  # -- Disk space available to check out repositories.
+  dataStorage: 15Gi
+  # -- Storage class name (if possible, use a resizable one).
+  storageClassName: "gp3"
+  accessModes: ["ReadWriteOnce"]
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: ${iam_role_arn}
+
+ingress:
+  enabled: false
+initConfig:
+  # -- Install providers/plugins into a path shared with the Atlantis pod.
+  enabled: true 
+
+# -- If managing secrets outside the chart for the Basic Auth secret, use this variable to reference the secret name.
+basicAuthSecretName: "atlantis-secrets"
+
+repoConfig: |
+  # repos.yaml
+  # Specify TERRAGRUNT_TFPATH environment variable to accommodate setting --default-tf-version
+  # Generate json plan via terragrunt for policy checks
+  repos:
+  - id: "/.*/"
+    workflow: terragrunt
+    autodiscover:
+      mode: enabled
+  workflows:
+    terragrunt:
+      plan:
+        steps:
+        - run:
+            # Allow for targeted plans/applies as not supported for Terraform wrappers by default
+            command: terragrunt plan -input=false $(printf '%s' $COMMENT_ARGS | sed 's/,/ /g' | tr -d '\\') -no-color -out $PLANFILE
+            output: hide
+        - run: |
+            terragrunt show $PLANFILE
+      apply:
+        steps:
+        - run: terragrunt apply -input=false $PLANFILE
+      import:
+        steps:
+        - env:
+            name: TF_VAR_author
+            command: 'git show -s --format="%ae" $HEAD_COMMIT'
+        # Allow for imports as not supported for Terraform wrappers by default
+        - run: terragrunt import -input=false $(printf '%s' $COMMENT_ARGS | sed 's/,/ /' | tr -d '\\')
+      state_rm:
+        steps:
+        # Allow for state removals as not supported for Terraform wrappers by default
+        - run: terragrunt state rm $(printf '%s' $COMMENT_ARGS | sed 's/,/ /' | tr -d '\\')

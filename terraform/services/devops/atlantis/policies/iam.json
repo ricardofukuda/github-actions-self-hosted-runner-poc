@@ -1,0 +1,42 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Sid": "bucketCreation",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:List*",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:PutEncryptionConfiguration",
+        "s3:PutBucketVersioning",
+        "s3:PutBucketPolicy",
+        "s3:Get*",
+        "s3:Delete*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::my-appplication-test-bucket*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Sid": "terraformRemoteState",
+      "Action": [
+        "s3:PutObject",
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:GetBucketVersioning",
+        "s3:GetEncryptionConfiguration",
+        "s3:GetBucketPolicy",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:PutEncryptionConfiguration",
+        "s3:PutBucketVersioning",
+        "s3:PutBucketPolicy"
+      ],
+      "Resource": [
+        "${s3_bucket_state_arn}",
+        "${s3_bucket_state_arn}/*"
+      ]
+    }
+  ]
+}

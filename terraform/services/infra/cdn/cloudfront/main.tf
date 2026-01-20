@@ -12,7 +12,7 @@ resource "aws_cloudfront_distribution" "main" {
   enabled         = true
   is_ipv6_enabled = true
   price_class     = "PriceClass_100"
-  aliases         = ["website.${var.domain}", "argo.${var.domain}"]
+  aliases         = [for k, v in var.alias_domain : "${v}.${var.domain}"]
 
   origin {
     domain_name = local.public_elb_domain
@@ -45,7 +45,7 @@ resource "aws_cloudfront_distribution" "main" {
 
     forwarded_values {
       query_string = true
-      headers = true
+      headers = ["*"]
       cookies {
         forward = "all"
       }

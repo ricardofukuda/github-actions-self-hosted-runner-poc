@@ -7,7 +7,7 @@ variable "tags" {
   type = any
 
   default = {
-    App         = "cloudfront"
+    App         = "atlantis"
     Environment = "infra"
     Terraform   = "true"
   }
@@ -17,6 +17,6 @@ variable "domain" {
   type = string
 }
 
-variable "alias_domain" {
-  type = list(string)
+variable "cloudfront_distribution_domain" {
+  type = string
 }

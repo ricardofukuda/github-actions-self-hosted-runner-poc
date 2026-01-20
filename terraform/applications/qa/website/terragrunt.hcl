@@ -8,6 +8,10 @@ dependencies {
 
 dependency "cloudfront"{
   config_path = "../../../services/infra/cdn/cloudfront"
+
+  mock_outputs = {
+    cloudfront_distribution_domain = "mock"
+  }
 }
 
 inputs = {
