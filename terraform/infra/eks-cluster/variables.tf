@@ -10,6 +10,6 @@ variable "azs" {
   type = list(string)
 }
 
-variable "domain" {
+variable "route53_domain"{
   type = string
 }

@@ -1,1 +1,1 @@
-record = "atlantis"
+route53_record = "atlantis"

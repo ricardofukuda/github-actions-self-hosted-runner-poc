@@ -2,6 +2,6 @@ variable "env" {
   type = string
 }
 
-variable "domain" {
+variable "route53_domain"{
   type = string
 }

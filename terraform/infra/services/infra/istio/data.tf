@@ -35,7 +35,7 @@ data "template_file" "values_base" {
 }
 
 data "aws_acm_certificate" "certificate" {
-  domain      = var.domain
+  domain      = var.route53_domain
   statuses    = ["ISSUED"]
   most_recent = true
 }

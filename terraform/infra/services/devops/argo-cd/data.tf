@@ -9,7 +9,7 @@ data "aws_eks_cluster_auth" "eks_auth" {
 data "template_file" "values" {
   template = file("config/values.yml")
   vars = {
-    domain = var.domain
+    domain = var.route53_domain
     githubWebhookSecret = local.secrets.githubWebhookSecret
   }
 }

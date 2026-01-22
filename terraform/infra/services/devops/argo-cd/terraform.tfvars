@@ -1,1 +1,1 @@
-record = "argo"
+route53_record = "argo"

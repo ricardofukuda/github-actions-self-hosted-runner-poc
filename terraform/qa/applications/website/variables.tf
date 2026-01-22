@@ -2,7 +2,7 @@ variable "env" {
   type    = string
 }
 
-variable "domain" {
+variable "route53_domain"{
   type = string
 }
 
@@ -10,6 +10,6 @@ variable "project_name" {
   type = string
 }
 
-variable "record" {
+variable "route53_record" {
   type = string
 }

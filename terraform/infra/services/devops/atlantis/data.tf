@@ -13,7 +13,7 @@ data "template_file" "values" {
 
   vars = {
     iam_role_arn = module.role.iam_role_arn
-    domain       = var.domain
+    domain       = var.route53_domain
     github_org   = local.secrets.github_org_url
   }
 }

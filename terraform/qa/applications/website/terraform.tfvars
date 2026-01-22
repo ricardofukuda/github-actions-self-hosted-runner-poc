@@ -1,1 +1,1 @@
-record = "website"
+route53_record = "website"

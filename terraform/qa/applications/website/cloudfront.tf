@@ -1,6 +1,6 @@
 module "cloudfront" {
   source          = "../../../modules/cloudfront-distribution"
-  route53_domain  = var.domain
+  route53_domain  = var.route53_domain
   route53_records = ["website"]
   env             = var.env
 

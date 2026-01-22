@@ -13,7 +13,7 @@ resource "kubernetes_manifest" "istio_gateway_public" {
       "servers" = [
         {
           "hosts" = [
-            "atlantis.${var.domain}",
+            "${var.route53_record}.${var.route53_domain}",
           ]
           "port" = {
             "name"     = "http"
@@ -26,7 +26,7 @@ resource "kubernetes_manifest" "istio_gateway_public" {
         },
         {
           "hosts" = [
-            "atlantis.${var.domain}",
+            "${var.route53_record}.${var.route53_domain}",
           ]
           "port" = {
             "name"     = "https"
@@ -54,7 +54,7 @@ resource "kubernetes_manifest" "istio_virtual_service_public" {
         "atlantis"
       ]
       "hosts" = [
-        "atlantis.${var.domain}",
+        "${var.route53_record}.${var.route53_domain}",
       ]
       "http" = [
         {

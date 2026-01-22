@@ -27,6 +27,6 @@ data "template_file" "iam" {
 }
 
 data "aws_route53_zone" "private" {
-  name         = var.domain
+  name         = var.route53_domain
   private_zone = true
 }

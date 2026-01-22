@@ -13,7 +13,7 @@ resource "kubernetes_manifest" "istio_gateway_public" {
       "servers" = [
         {
           "hosts" = [
-            "argo.${var.domain}",
+            "${var.route53_record}.${var.route53_domain}",
           ]
           "port" = {
             "name"     = "http"
@@ -26,7 +26,7 @@ resource "kubernetes_manifest" "istio_gateway_public" {
         },
         {
           "hosts" = [
-            "argo.${var.domain}",
+            "${var.route53_record}.${var.route53_domain}",
           ]
           "port" = {
             "name"     = "https"
@@ -54,7 +54,7 @@ resource "kubernetes_manifest" "istio_virtual_service_public" {
         "argocd"
       ]
       "hosts" = [
-        "argo.${var.domain}",
+        "${var.route53_record}.${var.route53_domain}",
       ]
       "http" = [
         {
