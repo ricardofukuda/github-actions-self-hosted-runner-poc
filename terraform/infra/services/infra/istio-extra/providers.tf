@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.14.0"
     }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 3.0.2"
+    }
   }
 }
 
@@ -12,7 +16,7 @@ provider "aws" {
   region = "us-east-1"
   default_tags {
     tags = {
-      "Project"     = "cloud-front"
+      "Project"     = "istio"
       "Environment" = "infra"
       "ManagedBy"   = "Terraform"
     }

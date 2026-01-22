@@ -5,15 +5,3 @@ include "root" {
 dependencies {
   paths = ["../../../infra/services/infra/istio", "../../../infra/services/infra/external-secrets"]
 }
-
-dependency "cloudfront"{
-  config_path = "../../../infra/services/infra/cdn/cloudfront"
-
-  mock_outputs = {
-    cloudfront_distribution_domain = "mock"
-  }
-}
-
-inputs = {
-  cloudfront_distribution_domain       = dependency.cloudfront.outputs.cloudfront_distribution_domain
-}

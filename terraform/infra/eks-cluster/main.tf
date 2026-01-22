@@ -78,7 +78,7 @@ module "eks" {
 
       disk_size = 20
 
-      instance_types = ["t3a.small"]
+      instance_types = ["t3a.medium"]
       capacity_type  = "ON_DEMAND"
 
       labels = {

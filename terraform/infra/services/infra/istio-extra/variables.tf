@@ -5,7 +5,3 @@ variable "env" {
 variable "domain" {
   type = string
 }
-
-variable "alias_domain" {
-  type = list(string)
-}

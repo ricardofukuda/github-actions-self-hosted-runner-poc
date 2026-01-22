@@ -6,6 +6,10 @@ data "aws_eks_cluster_auth" "eks_auth" {
   name = data.aws_eks_cluster.eks.name
 }
 
+data "aws_ec2_managed_prefix_list" "cloudfront" {
+  name = "com.amazonaws.global.cloudfront.origin-facing"
+}
+
 data "kubernetes_service" "istio_service_public" {
   metadata {
     name      = "istio-ingressgateway-public"
@@ -13,12 +17,6 @@ data "kubernetes_service" "istio_service_public" {
   }
 }
 
-data "aws_acm_certificate" "certificate" {
-  domain      = var.domain
-  statuses    = ["ISSUED"]
-  most_recent = true
-}
-
-data "aws_ec2_managed_prefix_list" "cloudfront" {
-  name = "com.amazonaws.global.cloudfront.origin-facing"
+data "aws_elb" "public" {
+  name = local.public_elb_id
 }

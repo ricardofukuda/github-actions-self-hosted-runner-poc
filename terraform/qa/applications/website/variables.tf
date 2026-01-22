@@ -1,6 +1,5 @@
 variable "env" {
   type    = string
-  default = "qa"
 }
 
 variable "domain" {
@@ -11,6 +10,6 @@ variable "project_name" {
   type = string
 }
 
-variable "cloudfront_distribution_domain" {
+variable "record" {
   type = string
 }
