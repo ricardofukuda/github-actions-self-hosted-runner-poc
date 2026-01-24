@@ -9,7 +9,3 @@ variable "vpc_cird" {
 variable "azs" {
   type = list(string)
 }
-
-variable "route53_domain"{
-  type = string
-}
