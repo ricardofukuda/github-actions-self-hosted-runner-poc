@@ -4,8 +4,6 @@ sudo yum install iptables-services -y
 
 sudo systemctl enable iptables
 
-#sudo echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/custom-ip-forwarding.conf
-#sudo sysctl -p /etc/sysctl.d/custom-ip-forwarding.conf
 sudo echo "net.ipv4.ip_forward=1" >  ~/custom-ip-forwarding.conf
 sudo sysctl -p ~/custom-ip-forwarding.conf
 

@@ -60,23 +60,9 @@ variable "tags" {
   default     = {}
 }
 
-variable "user_data_write_files" {
-  description = "Additional write_files section of cloud-init"
-  type        = list(any)
-  default     = []
-}
-
-variable "user_data_runcmd" {
-  description = "Additional runcmd section of cloud-init"
-  type        = list(list(string))
-  default     = []
-}
-
 locals {
-  // Merge the default tags and user-specified tags.
-  // User-specified tags take precedence over the default.
   name = "nat-instance-${var.name}"
-  common_tags = merge(
+  tags = merge(
     {
       Name = local.name
     },
@@ -85,7 +71,6 @@ locals {
 }
 
 variable "ssm_policy_arn" {
-  description = "SSM Policy to be attached to instance profile"
   type        = string
   default     = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }

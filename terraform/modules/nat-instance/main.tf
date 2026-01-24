@@ -2,7 +2,7 @@ resource "aws_security_group" "this" {
   name_prefix = local.name
   vpc_id      = var.vpc_id
 
-  tags = local.common_tags
+  tags = local.tags
 }
 
 resource "aws_security_group_rule" "egress" {
@@ -74,14 +74,14 @@ resource "aws_instance" "web_server_instance" {
 
   user_data = base64encode(data.template_file.user_data.rendered)
 
-  tags = local.common_tags
+  tags = local.tags
 }
 
 resource "aws_iam_instance_profile" "this" {
   name_prefix = var.name
   role        = aws_iam_role.this.name
 
-  tags = local.common_tags
+  tags = local.tags
 }
 
 resource "aws_iam_role" "this" {
@@ -101,7 +101,7 @@ resource "aws_iam_role" "this" {
 }
 EOF
 
-  tags = local.common_tags
+  tags = local.tags
 }
 
 resource "aws_iam_role_policy_attachment" "ssm" {

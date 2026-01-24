@@ -115,5 +115,5 @@ module "eks" {
     }
   }
 
-  depends_on = [module.vpc]
+  depends_on = [module.nat-instance]
 }

@@ -21,8 +21,8 @@ module "vpc" {
     eks-cluster = local.cluster_name
   }
 
-  enable_nat_gateway     = true
-  single_nat_gateway     = true  # Force single natgateway
+  enable_nat_gateway     = false
+  single_nat_gateway     = false  # Force single natgateway
   one_nat_gateway_per_az = false # Force single natgateway
 
   enable_dns_hostnames = true
